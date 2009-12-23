@@ -2,14 +2,15 @@
 require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
 #
-module Echo
+class Echo < EventMachine::Connection
 
+  def initialize *args
+    super *args
+    puts "#{self.class} client initialize runs"    
+  end
+  
   def post_init
-    puts "client post_init runs"
-    data = ["line 1", "line 2", "line 3", "quit line"]
-    data.each do |line|
-      send_data "#{line}\n"
-    end
+    puts "#{self.class} client post_init runs"
   end
 
    def receive_data data
@@ -28,8 +29,21 @@ module Echo
 end
 #
 EventMachine::run {
-  EventMachine::connect '127.0.0.1', 8081, Echo
-  puts "EM::run started"
+  puts "#{self.class} EM::run started"
+  EventMachine::connect('127.0.0.1', 8081, Echo) {|conn|
+    puts "#{self.class} EM::connect self class"
+    puts "#{conn.class} EM::connect started, connection class"
+    #
+    data = ["line 1", "line 2", "line 3"]
+    data.each do |line|
+      conn.send_data("#{line}\n")
+    end
+    #
+    data = ["line 4", "line 5", "line 6", "quit line"]
+    data.each do |line|
+      conn.send_data("#{line}\n")
+    end
+  }
 }
 #
 puts "Event loop done"
