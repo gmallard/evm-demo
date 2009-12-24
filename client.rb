@@ -1,6 +1,8 @@
 #
 require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
+$:.unshift File::dirname(__FILE__)
+require 'parms'
 #
 class Echo < EventMachine::Connection
 
