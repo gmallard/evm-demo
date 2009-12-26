@@ -2,7 +2,7 @@
 require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
 #
-class Echo < EventMachine::Connection
+class EchoClient < EventMachine::Connection
 
   def initialize *args
     super *args
@@ -23,7 +23,7 @@ end
 EventMachine::run {
   puts "#{self.class} EM::run started"
   #
-  EventMachine::connect('127.0.0.1', 8081, Echo) {|conn|
+  EventMachine::connect('127.0.0.1', 8081, EchoClient) {|conn|
     puts "#{self.class} EM::connect self class"
     puts "#{conn.class} EM::connect started, connection class"
     #

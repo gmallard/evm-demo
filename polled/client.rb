@@ -8,7 +8,7 @@ require 'eventmachine'
 # 2. Periodically looks for work to send to the server, and if work is present sends it.
 # 3. Periodically looks to see if a user initiated shutdown has been requested, and if so processes it.
 #
-class Polled < EventMachine::Connection
+class PolledClient < EventMachine::Connection
   # Initialize the connection
   def initialize *args
     super *args
@@ -92,7 +92,7 @@ EventMachine::run {
   port = ENV['EM_PORT'] ? ENV['EM_PORT'] : 8081
   host = ENV['EM_HOST'] ? ENV['EM_HOST']  : "127.0.0.1"
   #
-  conn = EventMachine::connect(host, port, Polled)
+  conn = EventMachine::connect(host, port, PolledClient)
   puts "#{self} EM::run connected to #{host}:#{port}"
   #
   EventMachine::add_periodic_timer( work_check_secs ) {

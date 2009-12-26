@@ -2,7 +2,7 @@
 require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
 #
-class Echo < EventMachine::Connection
+class HandlerClient < EventMachine::Connection
   #
   # Initialize the client connection.
   #
@@ -24,14 +24,14 @@ class Echo < EventMachine::Connection
     EventMachine::stop_event_loop()
   end
 #
-end # of class Echo
+end # of class HandlerClient
 #
 # The EM run loop.
 #
 EventMachine::run {
   puts "#{self} EM::run started"
   # Connect sequence.  All processing occurs here.
-  EventMachine::connect('127.0.0.1', 8081, Echo) {|conn|
+  EventMachine::connect('127.0.0.1', 8081, HandlerClient) {|conn|
     puts "#{conn} EM::connect self class"
     puts "#{conn} EM::connect started, connection class"
     #

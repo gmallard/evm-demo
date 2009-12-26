@@ -10,7 +10,7 @@ require 'eventmachine'
 # The primary purpose is to document the methods available from the 
 # EM::connection class.
 #
-class EchoServer  < EventMachine::Connection
+class HandlerServer  < EventMachine::Connection
 
   # Initialize
   def initialize *args
@@ -153,7 +153,7 @@ end
 # The EM run / event loop.
 #
 EventMachine::run {
-  EventMachine::start_server("127.0.0.1", 8081, EchoServer)
+  EventMachine::start_server("127.0.0.1", 8081, HandlerServer)
   puts 'running echo server on 8081'
 }
 
