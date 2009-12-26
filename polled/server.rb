@@ -4,6 +4,8 @@ require 'eventmachine'
 #
 # A class style handler, subclasses EventMachine::Connection
 #
+# This server never ends.  Kill by ^C or 'kill'.
+#
 class PolledServer  < EventMachine::Connection
 
   # Initialize
@@ -33,7 +35,7 @@ class PolledServer  < EventMachine::Connection
   # connection_completed()
   #
   # Called by the eventloop when remote TCP connection attempt completes 
-  # successfully (according to the documentation).
+  # successfully.
   #
   def connection_completed()
     super()
@@ -127,9 +129,14 @@ class PolledServer  < EventMachine::Connection
   end
 
 end
-
+#
+# The EM run loop.
+#
 EventMachine::run {
-  EventMachine::start_server("127.0.0.1", 8081, PolledServer)
-  puts 'running echo server on 8081'
+  port = ENV['EM_PORT'] ? ENV['EM_PORT'] : 8081
+  host = ENV['EM_HOST'] ? ENV['EM_HOST']  : "127.0.0.1"
+  #
+  EventMachine::start_server(host, port, PolledServer)
+  puts "#{self} - running server on #{host}:#{port}"
 }
 
