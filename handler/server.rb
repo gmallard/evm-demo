@@ -1,10 +1,14 @@
 #
 require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
-$:.unshift File::dirname(__FILE__)
-require 'parms'
 #
-# A class style handler, subclasses EventMachine::Connection
+# A class style protocol handler, subclasses EventMachine::Connection.
+#
+# This is another one shot server, and quite similar to the example in the
+# 'basic' subdirectory of this project.
+#
+# The primary purpose is to document the methods available from the 
+# EM::connection class.
 #
 class EchoServer  < EventMachine::Connection
 
@@ -41,6 +45,15 @@ class EchoServer  < EventMachine::Connection
   # I do not see this being called.  Why?  The documentation says it is for
   # network diagnostic purposes, and to use post_init() to complete 
   # connection processing. However, it seems like it _should_ be called.
+  #
+  # It finally ocurred to me:  this method is called when the EM run loop
+  # issues:
+  #
+  # * EM:connect
+  #
+  # but _not_ when the run loop issues:
+  #
+  # * EM:start_server
   #
   def connection_completed()
     super()
@@ -92,6 +105,7 @@ class EchoServer  < EventMachine::Connection
       puts "#{self} received <<< #{line}"
       # the echo part
       send_data ">>>you sent: #{line}\n"
+      # Close the connection when the client tells us to.
       close_connection if line =~ /quit/i
     end
   end
@@ -131,10 +145,13 @@ class EchoServer  < EventMachine::Connection
   #
   def unbind
     puts "#{self} unbind done - connection is closed"
+    EventMachine::stop_event_loop()
   end
 
 end
-
+#
+# The EM run / event loop.
+#
 EventMachine::run {
   EventMachine::start_server("127.0.0.1", 8081, EchoServer)
   puts 'running echo server on 8081'

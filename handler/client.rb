@@ -3,43 +3,50 @@ require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
 #
 class Echo < EventMachine::Connection
-
+  #
+  # Initialize the client connection.
+  #
   def initialize *args
     super *args
-    puts "#{self.class}/#{self} client initialize runs"    
+    puts "#{self} client initialize runs"    
   end
-  
+  #
+  # Connect is done.
+  #
   def post_init
-    puts "#{self.class}/#{self} client post_init runs"
+    puts "#{self} client post_init runs"
   end
-
-   def receive_data data
-     puts "#{self} client receive_data:"
-     rdata = data.split("\n")
-     rdata.each do |line|
-       puts "#{self} client received: #{line}"
-       EventMachine::stop_event_loop if line =~ /quit/i
-     end
-   end
-
-   def unbind
-     puts "#{self} client a connection has terminated"
-   end
-  
-end
+  #
+  # Connection terminated.
+  #
+  def unbind
+    puts "#{self} client a connection has terminated"
+    EventMachine::stop_event_loop()
+  end
+#
+end # of class Echo
+#
+# The EM run loop.
 #
 EventMachine::run {
-  puts "#{self.class} EM::run started"
+  puts "#{self} EM::run started"
+  # Connect sequence.  All processing occurs here.
   EventMachine::connect('127.0.0.1', 8081, Echo) {|conn|
-    puts "#{self.class} EM::connect self class"
-    puts "#{conn.class} EM::connect started, connection class"
+    puts "#{conn} EM::connect self class"
+    puts "#{conn} EM::connect started, connection class"
     #
-    data = ["line 1", "line 2", "line 3"]
+    data = ["line 1", "line 2", "line 3", "do quit please"]
     data.each do |line|
       conn.send_data("#{line}\n")
+      puts "#{conn} sent #{line}"
     end
     #
   }
+  # The connect sequence will end because the server terminated the 
+  # connection at the client's request.
+  # This causes the unbind method is driven in this client, and when 
+  # EM::stop_event_loop() is called the run loop will terminate.
 }
 #
 puts "Event loop done"
+
