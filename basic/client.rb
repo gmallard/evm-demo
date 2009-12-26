@@ -1,8 +1,6 @@
 #
 require 'rubygems' if RUBY_VERSION =~ /1.8/
 require 'eventmachine'
-$:.unshift File::dirname(__FILE__)
-require 'parms'
 #
 class Echo < EventMachine::Connection
 
@@ -15,23 +13,16 @@ class Echo < EventMachine::Connection
     puts "#{self.class} client post_init runs"
   end
 
-   def receive_data data
-     puts "client receive_data:"
-     rdata = data.split("\n")
-     rdata.each do |line|
-       puts "client received: #{line}"
-       EventMachine::stop_event_loop if line =~ /quit/i
-     end
-   end
-
-   def unbind
-     puts "client a connection has terminated"
-   end
+    def unbind
+      puts "client a connection has terminated"
+      EventMachine::stop_event_loop()      
+    end
   
 end
 #
 EventMachine::run {
   puts "#{self.class} EM::run started"
+  #
   EventMachine::connect('127.0.0.1', 8081, Echo) {|conn|
     puts "#{self.class} EM::connect self class"
     puts "#{conn.class} EM::connect started, connection class"
@@ -45,7 +36,10 @@ EventMachine::run {
     data.each do |line|
       conn.send_data("#{line}\n")
     end
+    #
   }
+  # Connection sequence is done, unbind is called from the event loop
+  # and we will quit.
 }
 #
 puts "Event loop done"

@@ -4,18 +4,24 @@ require 'eventmachine'
 $:.unshift File::dirname(__FILE__)
 require 'parms'
 #
+# This is a one shot server:  it quits after the first and only client 
+# connection completes.
+#
 module EchoServer
 
   def initialize *args
-    super
-    puts "-- initialize completes"
+    super *args
+    options = (Hash === args.last) ? args.pop : {}
     args.each do |narg|
       puts "next arg: #{narg}"
     end
-    # Try
+    #
+    puts "options hash:\t#{options.inspect}"
+    # Define some class variables if needed.
     @@clp_01 = args[0]
     @@clp_02 = args[1]
     @@clp_03 = args[2]
+    puts "-- initialize completes"
   end  
 
   def post_init
@@ -29,13 +35,16 @@ module EchoServer
       puts "received <<< #{line}"
       # the echo part
       send_data ">>>you sent: #{line}\n"
-      # close_connection if line =~ /quit/i
+      #
+      if line =~ /quit/i
+        close_connection if line =~ /quit/i
+      end
     end
   end
 
   def unbind
     puts "-- someone disconnected from the echo server!"
-    showcl_parms()
+    EventMachine::stop_event_loop()      
   end
 
   private
@@ -49,9 +58,14 @@ module EchoServer
 end
 
 EventMachine::run {
-  parma = "a string"
-  parmb = 1234  # Fixnum
-  parmc = Parms.new
-  EventMachine::start_server("127.0.0.1", 8081, EchoServer, parma, parmb, parmc)
-  puts 'running echo server on 8081'
+  parma = "a string"  # String
+  parmb = 1234        # Fixnum
+  parmc = Parms.new   # Normal class
+  opt_hash = {:a => 1, :b => "bv"}
+  EventMachine::start_server("127.0.0.1", 8081, EchoServer, 
+    parma, parmb, parmc, opt_hash)
+  puts 'EM.run running echo server on 8081'
 }
+#
+puts "Event loop complete."
+
