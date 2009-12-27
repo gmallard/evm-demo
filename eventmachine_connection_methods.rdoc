@@ -73,7 +73,7 @@
 #
 # == stop_proxying()
 #
-# == stream_file_data(filename,
+# == stream_file_data(filename, args={})
 #
 # == unbind()
 #
