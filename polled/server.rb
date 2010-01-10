@@ -16,7 +16,8 @@ class PolledServer  < EventMachine::Connection
 
   # -------------------------------
 
-  #++
+  # :startdoc:
+
   # close_connection()
   #
   # Called only by user code, never by the event loop.
@@ -26,12 +27,14 @@ class PolledServer  < EventMachine::Connection
     puts "#{self} close_connection done!"
   end
 
-  #--
+  # :stopdoc:
+
   # close_connection_after_writing()
   # comm_inactivity_timeout()
   # comm_inactivity_timeout=(value)
 
-  #++
+  # :startdoc:
+
   # connection_completed()
   #
   # Called by the eventloop when remote TCP connection attempt completes 
@@ -42,7 +45,8 @@ class PolledServer  < EventMachine::Connection
     puts "#{self} connection_completed done!"
   end
 
-  #--
+  # :stopdoc:
+
   # detach()
   # error?()
   # get_peer_cert()
@@ -61,7 +65,8 @@ class PolledServer  < EventMachine::Connection
   # pending_connect_timeout=(value)
   # post_init()
 
-  #++
+  # :startdoc:
+
   # post_init()
   #
   # Called by the event loop after the connection is successfully established,
@@ -71,11 +76,13 @@ class PolledServer  < EventMachine::Connection
     puts "#{self} post_init done!"
   end
 
-  #--
+  # :stopdoc:
+
   # proxy_incoming_to(conn,bufsize=0)
   # proxy_target_unbound()
 
-  #++
+  # :startdoc:
+
   # receive_data(data)
   #
   # Called only by the event loop hwenever data has been received on the 
@@ -91,11 +98,13 @@ class PolledServer  < EventMachine::Connection
     end
   end
 
-  #--
+  # :stopdoc:
+
   # reconnect(server,port)
   # resume()
 
-  #++
+  # :startdoc:
+
   # send_data(data)
   #
   # Called only by user code, never by the event loop.
@@ -105,7 +114,8 @@ class PolledServer  < EventMachine::Connection
     puts "#{self} send_data done: #{data.inspect}"
   end
 
-  #--
+  # :stopdoc:
+
   # send_datagram(data,recipient_address,recipient_port)
   # send_file_data(filename)
   # set_comm_inactivity_timeout(value)
@@ -116,7 +126,8 @@ class PolledServer  < EventMachine::Connection
   # stop_proxying()
   # stream_file_data(filename,
 
-  #++
+  # :startdoc:
+
   # unbind()
   #
   # Called by the framework whenever a connection is closed, either by the 
