@@ -8,7 +8,8 @@ require 'eventmachine'
 # 'basic' subdirectory of this project.
 #
 # The primary purpose is to document the methods available from the 
-# EM::connection class.
+# EM::connection class.  This documentation is available by reviewing the 
+# code.
 #
 class HandlerServer  < EventMachine::Connection
 
@@ -22,7 +23,7 @@ class HandlerServer  < EventMachine::Connection
 
   # :startdoc:
 
-  # close_connection()
+  # close_connection().
   #
   # Called only by user code, never by the event loop.
   #
@@ -39,7 +40,7 @@ class HandlerServer  < EventMachine::Connection
 
   # :startdoc:
 
-  # connection_completed()
+  # connection_completed().
   #
   # Called by the eventloop when remote TCP connection attempt completes 
   # successfully.
@@ -103,7 +104,7 @@ class HandlerServer  < EventMachine::Connection
 
   # :startdoc:
 
-  # receive_data(data)
+  # receive_data(data).
   #
   # Called only by the event loop hwenever data has been received on the 
   # network connection.  Never called by user code.
@@ -126,7 +127,7 @@ class HandlerServer  < EventMachine::Connection
 
   # :startdoc:
 
-  # send_data(data)
+  # send_data(data).
   #
   # Called only by user code, never by the event loop.
   #
@@ -149,7 +150,7 @@ class HandlerServer  < EventMachine::Connection
 
   # :startdoc:
 
-  # unbind()
+  # unbind().
   #
   # Called by the framework whenever a connection is closed, either by the 
   # client, the remote peer, or a network error.

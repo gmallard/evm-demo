@@ -26,13 +26,13 @@ module EchoServer
     puts "-- initialize completes"
   end  
 
-  # EM::Connection.post_init override
+  # EM::Connection.post_init() override
   def post_init
     puts "-- someone connected to the echo server!"
     showcl_parms()
   end
 
-  # EM::Connection.receive_data override
+  # EM::Connection.receive_data(data) override
   def receive_data data
     rdata = data.split("\n")
     rdata.each do |line|
@@ -46,7 +46,7 @@ module EchoServer
     end
   end
 
-  # EM::Connection.unbind override
+  # EM::Connection.unbind() override
   def unbind
     puts "-- someone disconnected from the echo server!"
     EventMachine::stop_event_loop()      

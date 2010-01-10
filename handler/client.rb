@@ -11,14 +11,14 @@ class HandlerClient < EventMachine::Connection
     puts "#{self} client initialize runs"    
   end
 
-  # EM::Connection.post_init override
+  # EM::Connection.post_init() override.
   # Connect is done.
   #
   def post_init
     puts "#{self} client post_init runs"
   end
 
-  # EM::Connection.unbind override
+  # EM::Connection.unbind() override.
   # Connection terminated.
   #
   def unbind

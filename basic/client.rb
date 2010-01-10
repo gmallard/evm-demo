@@ -10,12 +10,12 @@ class EchoClient < EventMachine::Connection
     puts "#{self.class} client initialize runs"    
   end
   
-  # EM:Commection.post_init override.
+  # EM:Connection.post_init() override.
   def post_init
     puts "#{self.class} client post_init runs"
   end
 
-  # EM:Connection.unbind override.  This is called because our server
+  # EM:Connection.unbind() override.  This is called because our server
   # will forcibly close the connection when we ask it to.
   def unbind
     puts "client a connection has terminated"

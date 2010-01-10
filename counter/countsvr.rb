@@ -12,14 +12,14 @@ module LineCounter
   #
   MaxLinesPerConnection = 10
 
-  # EM::Connection.post_init override
+  # EM::Connection.post_init() override.
   def post_init
     puts "\n#{self.inspect} Received a new connection"
     @data_received = ""
     @line_count = 0
   end
 
-  # EM::Connection.receive_data override
+  # EM::Connection.receive_data(data) override.
   def receive_data data
     @data_received << data
     while @data_received.slice!( /^[^\n]*[\n]/m )
