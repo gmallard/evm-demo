@@ -10,13 +10,15 @@ class HandlerClient < EventMachine::Connection
     super *args
     puts "#{self} client initialize runs"    
   end
-  #
+
+  # EM::Connection.post_init override
   # Connect is done.
   #
   def post_init
     puts "#{self} client post_init runs"
   end
-  #
+
+  # EM::Connection.unbind override
   # Connection terminated.
   #
   def unbind
@@ -44,7 +46,7 @@ EventMachine::run {
   }
   # The connect sequence will end because the server terminated the 
   # connection at the client's request.
-  # This causes the unbind method is driven in this client, and when 
+  # This causes the unbind method to be driven in this client, and when 
   # EM::stop_event_loop() is called the run loop will terminate.
 }
 #
