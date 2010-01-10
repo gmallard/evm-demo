@@ -4,22 +4,27 @@ require 'eventmachine'
 #
 class EchoClient < EventMachine::Connection
 
+  # initialize
   def initialize *args
     super *args
     puts "#{self.class} client initialize runs"    
   end
   
+  # EM:Commection.post_init override.
   def post_init
     puts "#{self.class} client post_init runs"
   end
 
-    def unbind
-      puts "client a connection has terminated"
-      EventMachine::stop_event_loop()      
-    end
+  # EM:Connection.unbind override.  This is called because our server
+  # will forcibly close the connection when we ask it to.
+  def unbind
+    puts "client a connection has terminated"
+    EventMachine::stop_event_loop()      
+  end
   
 end
-#
+
+# The EM run/event loop.
 EventMachine::run {
   puts "#{self.class} EM::run started"
   #
@@ -38,8 +43,10 @@ EventMachine::run {
     end
     #
   }
-  # Connection sequence is done, unbind is called from the event loop
-  # and we will quit.
+  # Connection sequence is done, unbind is called becuase the network
+  # connection has been closed by the server, and we will exit the run
+  # run/event loop.
 }
 #
 puts "Event loop done"
+
