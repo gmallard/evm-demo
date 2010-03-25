@@ -41,7 +41,7 @@ module EchoServer
       send_data ">>>you sent: #{line}\n"
       # If client wants us to quit, we will.
       if line =~ /quit/i
-        close_connection if line =~ /quit/i
+        close_connection
       end
     end
   end
