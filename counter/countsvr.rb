@@ -37,7 +37,7 @@ end
 # EM Run/Event loop
 #
 EventMachine::run {
-  host,port = "127.0.0.1", 8081
+  host,port = "127.0.0.1", 9091
   # No additional initialize parameters are used here.
   EventMachine::start_server host, port, LineCounter
   puts "Now accepting connections on address #{host}, port #{port}..."

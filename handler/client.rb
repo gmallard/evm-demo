@@ -33,7 +33,7 @@ end # of class HandlerClient
 EventMachine::run {
   puts "#{self} EM::run started"
   # Connect sequence.  All processing occurs here.
-  EventMachine::connect('127.0.0.1', 8081, HandlerClient) {|conn|
+  EventMachine::connect('127.0.0.1', 9091, HandlerClient) {|conn|
     puts "#{conn} EM::connect self class"
     puts "#{conn} EM::connect started, connection class"
     #

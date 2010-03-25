@@ -1,6 +1,6 @@
 #!/bin/bash
 #
 set -x
-telnet 127.0.0.1 8081
+telnet 127.0.0.1 9091
 set +x
 

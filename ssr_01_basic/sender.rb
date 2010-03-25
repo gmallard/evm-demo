@@ -40,7 +40,7 @@ end
 EventMachine::run {
   puts "#{self} EM::run started"
   #
-  port = ENV['EM_PORT'] ? ENV['EM_PORT'] : 8081
+  port = ENV['EM_PORT'] ? ENV['EM_PORT'] : 9091
   host = ENV['EM_HOST'] ? ENV['EM_HOST']  : "127.0.0.1"
   #
   EventMachine::connect(host, port, SSR01_Sender) {|conn|

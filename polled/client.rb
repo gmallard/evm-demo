@@ -95,7 +95,7 @@ EventMachine::run {
   puts "#{self} work file is: #{work_file}"
   puts "#{self} stop file is: #{stop_file}"
   #
-  port = ENV['EM_PORT'] ? ENV['EM_PORT'] : 8081
+  port = ENV['EM_PORT'] ? ENV['EM_PORT'] : 9091
   host = ENV['EM_HOST'] ? ENV['EM_HOST']  : "127.0.0.1"
   #
   conn = EventMachine::connect(host, port, PollingClient)

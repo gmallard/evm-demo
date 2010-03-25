@@ -167,7 +167,7 @@ end
 # The EM run / event loop.
 #
 EventMachine::run {
-  EventMachine::start_server("127.0.0.1", 8081, HandlerServer)
-  puts 'running echo server on 8081'
+  EventMachine::start_server("127.0.0.1", 9091, HandlerServer)
+  puts 'running echo server on 9091'
 }
 
