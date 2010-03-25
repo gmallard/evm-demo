@@ -28,7 +28,7 @@ end
 EventMachine::run {
   puts "#{self.class} EM::run started"
   #
-  EventMachine::connect('127.0.0.1', 8081, EchoClient) {|conn|
+  EventMachine::connect('127.0.0.1', 9091, EchoClient) {|conn|
     puts "#{self.class} EM::connect self class"
     puts "#{conn.class} EM::connect started, connection class"
     #

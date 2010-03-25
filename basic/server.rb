@@ -71,9 +71,9 @@ EventMachine::run {
   parmc = Parms.new   # Normal class
   # More parms to pass to server initialization
   opt_hash = {:a => 1, :b => "bv"}
-  EventMachine::start_server("127.0.0.1", 8081, EchoServer, 
+  EventMachine::start_server("127.0.0.1", 9091, EchoServer, 
     parma, parmb, parmc, opt_hash)
-  puts 'EM.run running echo server on 8081'
+  puts 'EM.run running echo server on 9091'
 }
 #
 puts "Event loop complete."
